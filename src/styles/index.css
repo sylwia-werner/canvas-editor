@@ -1,44 +1,64 @@
-@import "tailwindcss";
-@import "./fonts.css";
-@import "./base.css";
+@import 'tailwindcss';
+@import './fonts.css';
+@import './base.css';
 
 @layer base {
-    .text-btn {
-        font: var(--font-btn);
-    }
+	.text-btn {
+		font: var(--font-btn);
+	}
 
-    .text-display {
-        font: var(--font-display);
-    }
+	.text-display {
+		font: var(--font-display);
+	}
 
-    .text-body-bold {
-        font: var(--font-body-bold);
-    }
+	.text-body-bold {
+		font: var(--font-body-bold);
+	}
 
-    .text-body-medium {
-        font: var(--font-body-medium);
-    }
+	.text-body-medium {
+		font: var(--font-body-medium);
+	}
+}
+
+@layer components {
+	.btn-primary {
+		@apply rounded-sm bg-primary px-8 py-2 leading-6 text-white hover:bg-primary-dark focus:outline-2 focus:outline-primary-50;
+	}
+
+	.btn-danger {
+		@apply relative bg-inherit text-danger after:absolute after:bottom-0 after:left-0 after:h-[1px] after:w-full after:bg-danger after:content-[''];
+	}
 }
 
 @theme {
-    --color-primary: hsl(276, 91%, 38%);
-    --color-primary-50: hsla(276, 91%, 38%, 0.5);
-    --color-black-100: hsl(0, 0%, 21%);
-    --color-black-75: hsl(0, 0%, 40%);
-    --color-black-50: hsl(0, 0%, 61%);
-    --color-black-25: hsl(0, 0%, 80%);
-    
-    --color-white: hsl(0, 0%, 100%);
-    --color-white-98:hsl(0, 0%, 98%);
-    --color-white-97: hsl(240, 7%, 97%);
+	--color-primary: hsl(276, 91%, 38%);
+	--color-primary-dark: hsla(276, 91%, 28%, 1);
+	--color-primary-50: hsla(276, 91%, 38%, 0.5);
+	--color-black-100: hsl(0, 0%, 21%);
+	--color-black-75: hsl(0, 0%, 40%);
+	--color-black-50: hsl(0, 0%, 61%);
+	--color-black-25: hsl(0, 0%, 80%);
 
-    --font-family: "Poppins", sans-serif;
-    --font-btn: 600 0.9375rem var(--font-family);
-    --font-display: 700 2rem var(--font-family);
-    --font-body-bold: 700 1.125rem var(--font-family);
-    --font-body-medium: 500 1.125rem var(--font-family);
+	--color-white: hsl(0, 0%, 100%);
+	--color-white-98: hsl(0, 0%, 98%);
+	--color-white-97: hsl(240, 7%, 97%);
 
-    --radius-sm: 0.25rem;
-    --radius-md: 0.0625rem;
+	--color-danger: hsla(0, 100%, 40%, 1);
 
+	--font-family: 'Poppins', sans-serif;
+	--font-btn: 600 0.9375rem var(--font-family);
+	--font-display: 700 2rem var(--font-family);
+	--font-body-bold: 700 1.125rem var(--font-family);
+	--font-body-medium: 500 1.125rem var(--font-family);
+
+	--radius-sm: 0.3125rem;
+	--radius-md: 0.625rem;
+
+	--breakpoint-xs: 320px;
+	--breakpoint-sm: 480px;
+	--breakpoint-md: 768px;
+	--breakpoint-lg: 992px;
+	--breakpoint-xl: 1300px;
+	--breakpoint-2xl: 1536px;
+	--breakpoint-3xl: 1920px;
 }
