@@ -1,11 +1,10 @@
-
 html {
-    color: var(--color-black-75);
-    background-color: var(--color-white);
-    font-family: var(--font-family);
+	color: var(--color-black-75);
+	background-color: var(--color-white);
+	font-family: var(--font-family);
 }
 
 body {
-    min-height: 100vh;
+	background-color: var(--color-white);
+	min-height: 100vh;
 }
-
