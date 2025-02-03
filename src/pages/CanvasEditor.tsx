@@ -1,5 +1,6 @@
 import { MainTemplate } from '@/components/templates/MainTemplate';
 import welcomeImage from '@/assets/canvas-default-img.png';
+import { Editor } from '@/components/organisms/Editor';
 
 export const CanvasEditor = () => {
 	// TODO: Hook for canvas context
@@ -19,8 +20,8 @@ export const CanvasEditor = () => {
 					<div>Canvas</div>
 				)}
 			</div>
-			<div className="flex aspect-[4/5] w-full max-w-[759px] bg-gray-300">
-				Editor
+			<div className="flex aspect-[4/5] w-full max-w-[759px] bg-inherit">
+				<Editor />
 			</div>
 		</MainTemplate>
 	);
