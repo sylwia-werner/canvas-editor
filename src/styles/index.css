@@ -20,16 +20,6 @@
 	}
 }
 
-@layer components {
-	.btn-primary {
-		@apply rounded-sm bg-primary px-8 py-2 leading-6 text-white hover:bg-primary-dark focus:outline-2 focus:outline-primary-50;
-	}
-
-	.btn-danger {
-		@apply relative bg-inherit text-danger after:absolute after:bottom-0 after:left-0 after:h-[1px] after:w-full after:bg-danger after:content-[''];
-	}
-}
-
 @theme {
 	--color-primary: hsl(276, 91%, 38%);
 	--color-primary-dark: hsla(276, 91%, 28%, 1);
