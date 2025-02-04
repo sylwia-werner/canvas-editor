@@ -22,7 +22,7 @@
 
 @theme {
 	--color-primary: hsl(276, 91%, 38%);
-	--color-primary-dark: hsla(276, 91%, 28%, 1);
+	--color-primary-dark: hsla(276, 91%, 28%);
 	--color-primary-50: hsla(276, 91%, 38%, 0.5);
 	--color-black-100: hsl(0, 0%, 21%);
 	--color-black-75: hsl(0, 0%, 40%);
@@ -33,7 +33,9 @@
 	--color-white-98: hsl(0, 0%, 98%);
 	--color-white-97: hsl(240, 7%, 97%);
 
-	--color-danger: hsla(0, 100%, 40%, 1);
+	--color-danger: hsla(0, 100%, 40%);
+	--color-blue: hsla(220, 100%, 50%);
+	--color-green: hsla(126, 100%, 43%);
 
 	--font-family: 'Poppins', sans-serif;
 	--font-btn: 600 0.9375rem var(--font-family);

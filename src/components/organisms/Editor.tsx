@@ -1,13 +1,17 @@
 import { ActionButton } from '@/components/atoms/buttons/ActionButton';
 import { DangerButton } from '@/components/atoms/buttons/DangerButton';
 import { PrimaryButton } from '@/components/atoms/buttons/PrimaryButton';
+import { CanvasColorButton } from '@/components/atoms/CanvasColorButton';
 import { Hr } from '@/components/atoms/Hr';
 import { BackgroundIcon } from '@/components/atoms/icons/BackgroundIcon';
 import { ImagesIcon } from '@/components/atoms/icons/ImagesIcon';
 import { LogoIcon } from '@/components/atoms/icons/LogoIcon';
 import { ResetIcon } from '@/components/atoms/icons/ResetIcon';
 import { TextIcon } from '@/components/atoms/icons/TextIcon';
+import { TextArea } from '@/components/atoms/Textarea';
+import { Draggable } from '@/components/molecules/Draggable';
 import { ImageInput } from '@/components/molecules/ImageInput';
+import { CanvasText } from '@/components/organisms/CanvasText';
 import { usePosterContext } from '@/context/usePosterContext';
 
 export const Editor = () => {
@@ -38,6 +42,8 @@ export const Editor = () => {
 				</div>
 			</div>
 			<Hr />
+
+			<CanvasText />
 
 			<div className="grid grid-cols-1 gap-8 sm:grid-cols-2">
 				<ActionButton
