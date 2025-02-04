@@ -1,7 +1,12 @@
+import { PosterProvider } from '@/context/usePosterContext';
 import { CanvasEditor } from '@/pages/CanvasEditor';
 
 function App() {
-	return <CanvasEditor />;
+	return (
+		<PosterProvider>
+			<CanvasEditor />
+		</PosterProvider>
+	);
 }
 
 export default App;
