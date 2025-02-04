@@ -11,7 +11,16 @@ import { ImageInput } from '@/components/molecules/ImageInput';
 import { usePosterContext } from '@/context/usePosterContext';
 
 export const Editor = () => {
-	const { setImage, setBackground, setText } = usePosterContext();
+	const { setImage, setBackground, addText, reset } = usePosterContext();
+
+	const exportToPNG = () => {
+		const canvas = document.querySelector('canvas');
+		if (!canvas) return;
+		const link = document.createElement('a');
+		link.href = canvas.toDataURL();
+		link.download = 'poster.png';
+		link.click();
+	};
 
 	return (
 		<div className="flex w-full flex-col gap-8">
@@ -23,7 +32,7 @@ export const Editor = () => {
 				<div className="mt-3 sm:mt-0">
 					<DangerButton
 						label="Reset"
-						onClick={() => console.log('Reset')}
+						onClick={reset}
 						Icon={<ResetIcon />}
 					/>
 				</div>
@@ -34,7 +43,7 @@ export const Editor = () => {
 				<ActionButton
 					label="Text"
 					Icon={<TextIcon size={128} className="text-black-75" />}
-					onClick={() => setText('Text')}
+					onClick={addText}
 				/>
 				<ImageInput
 					label="Image"
@@ -55,8 +64,7 @@ export const Editor = () => {
 				<div className="w-fit self-center sm:self-end">
 					<PrimaryButton
 						label="Export to png"
-						onClick={() => console.log('Export')}
-						disabled
+						onClick={exportToPNG}
 					/>
 				</div>
 			</div>
