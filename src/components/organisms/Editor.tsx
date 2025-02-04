@@ -30,21 +30,17 @@ export const Editor = () => {
 			</div>
 			<Hr />
 
-			<div className="flex flex-wrap gap-8">
+			<div className="grid grid-cols-1 gap-8 sm:grid-cols-2">
 				<ActionButton
 					label="Text"
 					Icon={<TextIcon size={128} className="text-black-75" />}
 					onClick={() => setText('Text')}
-					disabled
 				/>
-
 				<ImageInput
 					label="Image"
 					Icon={<ImagesIcon size={128} className="text-black-75" />}
 					setImageFile={setImage}
-					disabled
 				/>
-
 				<ImageInput
 					label="Background"
 					Icon={
@@ -54,15 +50,15 @@ export const Editor = () => {
 				/>
 			</div>
 
-			<div className="mt-auto" />
-
-			<Hr />
-			<div className="w-fit self-end">
-				<PrimaryButton
-					label="Export to png"
-					onClick={() => console.log('Export')}
-					disabled
-				/>
+			<div className="mt-auto flex flex-col gap-8">
+				<Hr />
+				<div className="w-fit self-center sm:self-end">
+					<PrimaryButton
+						label="Export to png"
+						onClick={() => console.log('Export')}
+						disabled
+					/>
+				</div>
 			</div>
 		</div>
 	);
