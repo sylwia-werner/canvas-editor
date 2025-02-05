@@ -3,9 +3,9 @@ import welcomeImage from '@/assets/canvas-default-img.png';
 import { Editor } from '@/components/organisms/Editor';
 import { usePosterContext } from '@/context/usePosterContext';
 import { Poster } from '@/components/organisms/Poster';
-import { PosterText } from '@/components/organisms/PosterText';
+import { PosterText } from '@/components/molecules/PosterText';
 import { useRef } from 'react';
-import { Draggable } from '@/components/molecules/Draggable';
+import { Draggable } from '@/components/organisms/Draggable';
 
 const INITIAL_TEXTAREA_SIZE = { width: 350, height: 120 };
 const INITIAL_IMAGE_SIZE = { width: 150, height: 150 };
