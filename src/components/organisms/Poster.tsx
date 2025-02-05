@@ -1,6 +1,3 @@
-import { PosterText } from '@/components/organisms/PosterText';
-import { TextElement } from '@/context/usePosterContext';
-import { drawCanvas } from '@/utils/canvasHelper';
 import classNames from 'classnames';
 import {
 	Children,

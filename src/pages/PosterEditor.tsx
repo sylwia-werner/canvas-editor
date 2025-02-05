@@ -4,10 +4,12 @@ import { Editor } from '@/components/organisms/Editor';
 import { usePosterContext } from '@/context/usePosterContext';
 import { Poster } from '@/components/organisms/Poster';
 import { PosterText } from '@/components/organisms/PosterText';
-import { useEffect, useRef } from 'react';
+import { useRef } from 'react';
+import { Draggable } from '@/components/molecules/Draggable';
 
 export const PosterEditor = () => {
-	const { background, image, texts } = usePosterContext();
+	const { background, image, texts, updateText, moveText, removeText } =
+		usePosterContext();
 	const posterRef = useRef<HTMLDivElement>(null);
 
 	const shouldShowWelcomeImage = !background && !image && !texts.length;
@@ -28,7 +30,15 @@ export const PosterEditor = () => {
 						isEmptyBackground={isDrawingInitialized}
 					>
 						{texts.map(text => (
-							<PosterText key={text.id} {...text} />
+							<Draggable
+								key={text.id}
+								id={text.id}
+								initialPosition={{ x: text.x, y: text.y }}
+								onDrag={moveText}
+								onRemove={() => removeText(text.id)}
+							>
+								<PosterText key={text.id} {...text} />
+							</Draggable>
 						))}
 					</Poster>
 				)}
