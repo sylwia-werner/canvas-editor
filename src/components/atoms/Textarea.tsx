@@ -1,14 +1,11 @@
-import { TextColor } from '@/types/textColors';
-import { getTextColor } from '@/utils/getColor';
 import classNames from 'classnames';
 import { ChangeEvent, useEffect, useRef, useState } from 'react';
 
 interface Props {
-	onChange?: (value: string) => void;
 	textColor: string;
 }
 
-export const TextArea = ({ onChange, textColor }: Props) => {
+export const TextArea = ({ textColor }: Props) => {
 	const [value, setValue] = useState('');
 	const [fontSize, setFontSize] = useState(2);
 	const textareaRef = useRef<HTMLTextAreaElement>(null);
@@ -16,8 +13,6 @@ export const TextArea = ({ onChange, textColor }: Props) => {
 	const handleChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
 		const newValue = e.target.value;
 		setValue(newValue);
-
-		onChange?.(newValue);
 	};
 
 	const computeFontSize = (height: number) => {
@@ -48,10 +43,6 @@ export const TextArea = ({ onChange, textColor }: Props) => {
 	useEffect(() => {
 		setValue(value);
 	}, [value]);
-
-	useEffect(() => {
-		console.log(textColor);
-	}, [textColor]);
 
 	return (
 		<textarea

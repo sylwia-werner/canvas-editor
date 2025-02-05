@@ -8,15 +8,8 @@ import { useRef } from 'react';
 import { Draggable } from '@/components/molecules/Draggable';
 
 export const PosterEditor = () => {
-	const {
-		background,
-		image,
-		texts,
-		updateText,
-		moveText,
-		removeText,
-		changeTextColor,
-	} = usePosterContext();
+	const { background, image, texts, moveText, removeText, changeTextColor } =
+		usePosterContext();
 	const posterRef = useRef<HTMLDivElement>(null);
 
 	const shouldShowWelcomeImage = !background && !image && !texts.length;

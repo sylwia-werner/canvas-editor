@@ -1,8 +1,7 @@
 import { ColorButton } from '@/components/atoms/ColorButton';
 import { TextArea } from '@/components/atoms/Textarea';
-import { usePosterContext } from '@/context/usePosterContext';
 import { TEXT_COLORS, TextColor } from '@/types/textColors';
-import { getBackgroundColor } from '@/utils/getColor';
+import { getBackgroundColor, getTextColor } from '@/utils/getColor';
 
 interface Props {
 	id: string;
@@ -15,14 +14,9 @@ export const PosterText = ({
 	changeTextColor,
 	currentTextColor,
 }: Props) => {
-	const { updateText, texts } = usePosterContext();
-
 	return (
 		<>
-			<TextArea
-				onChange={value => updateText(id, value)}
-				textColor={currentTextColor}
-			/>
+			<TextArea textColor={getTextColor(currentTextColor)} />
 
 			<div className="absolute -bottom-6 left-0 flex gap-3">
 				{TEXT_COLORS.map(({ color, label }) => (

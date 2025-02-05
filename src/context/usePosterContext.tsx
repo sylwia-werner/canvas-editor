@@ -18,7 +18,6 @@ interface MemeContextType {
 	setBackground: (image: string | null) => void;
 	setImage: (image: string | null) => void;
 	addText: () => void;
-	updateText: (id: string, newText: string) => void;
 	moveText: (id: string, x: number, y: number) => void;
 	changeTextColor: (id: string, color: TextColor) => void;
 	removeText: (id: string) => void;
@@ -54,13 +53,13 @@ export const PosterProvider = ({ children }: Args) => {
 		setTexts(prev => [...prev, newText]);
 	};
 
-	const updateText = (id: string, newText: string) => {
-		setTexts(prev =>
-			prev.map(text =>
-				text.id === id ? { ...text, text: newText } : text,
-			),
-		);
-	};
+	// const updateText = (id: string, newText: string) => {
+	// 	setTexts(prev =>
+	// 		prev.map(text =>
+	// 			text.id === id ? { ...text, text: newText } : text,
+	// 		),
+	// 	);
+	// };
 
 	const removeText = (id: string) => {
 		setTexts(prev => prev.filter(text => text.id !== id));
@@ -87,7 +86,6 @@ export const PosterProvider = ({ children }: Args) => {
 				setBackground,
 				setImage,
 				addText,
-				updateText,
 				moveText,
 				removeText,
 				changeTextColor,
