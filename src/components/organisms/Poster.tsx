@@ -22,14 +22,14 @@ export const Poster = forwardRef<HTMLDivElement, Props>(
 		const [bounds, setBounds] = useState({ width: 0, height: 0 });
 
 		useEffect(() => {
+			if (!posterRef.current) return;
+
 			const resizeObserver = new ResizeObserver(entries => {
 				const { width, height } = entries[0].contentRect;
 				setBounds({ width, height });
 			});
 
-			if (posterRef?.current) {
-				resizeObserver.observe(posterRef.current);
-			}
+			resizeObserver.observe(posterRef.current);
 
 			return () => resizeObserver.disconnect();
 		}, [posterRef]);

@@ -35,9 +35,7 @@ export const TextArea = ({ textColor }: Props) => {
 
 		resizeObserver.observe(textareaRef.current);
 
-		return () => {
-			resizeObserver.disconnect();
-		};
+		return () => resizeObserver.disconnect();
 	}, [textareaRef]);
 
 	useEffect(() => {
