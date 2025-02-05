@@ -1,5 +1,3 @@
-import { TextColor } from '@/types/textColors';
-import { getBackgroundColor } from '@/utils/getColor';
 import classNames from 'classnames';
 
 interface Props {

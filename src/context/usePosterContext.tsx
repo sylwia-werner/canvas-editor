@@ -1,5 +1,5 @@
 import { TextColor } from '@/types/textColors';
-import { createContext, ReactNode, useContext, useId, useState } from 'react';
+import { createContext, ReactNode, useContext, useState } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 
 export interface DraggableElement {
