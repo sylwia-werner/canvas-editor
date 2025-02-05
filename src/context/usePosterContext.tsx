@@ -1,3 +1,4 @@
+import { TextColor } from '@/types/textColors';
 import { createContext, ReactNode, useContext, useId, useState } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 
@@ -6,7 +7,7 @@ export interface TextElement {
 	text: string;
 	x: number;
 	y: number;
-	color: string;
+	color: TextColor;
 	fontSize: number;
 }
 
@@ -19,6 +20,7 @@ interface MemeContextType {
 	addText: () => void;
 	updateText: (id: string, newText: string) => void;
 	moveText: (id: string, x: number, y: number) => void;
+	changeTextColor: (id: string, color: TextColor) => void;
 	removeText: (id: string) => void;
 	reset: () => void;
 }
@@ -46,7 +48,7 @@ export const PosterProvider = ({ children }: Args) => {
 			text: 'New Text',
 			x: 50,
 			y: 50,
-			color: '#000',
+			color: 'black-100',
 			fontSize: 24,
 		};
 		setTexts(prev => [...prev, newText]);
@@ -70,15 +72,7 @@ export const PosterProvider = ({ children }: Args) => {
 		);
 	};
 
-	const changeTextColor = (
-		id: string,
-		color:
-			| 'bg-black-100'
-			| 'bg-danger'
-			| 'bg-blue'
-			| 'bg-green'
-			| 'bg-white',
-	) => {
+	const changeTextColor = (id: string, color: TextColor) => {
 		setTexts(prev =>
 			prev.map(text => (text.id === id ? { ...text, color } : text)),
 		);
@@ -96,6 +90,7 @@ export const PosterProvider = ({ children }: Args) => {
 				updateText,
 				moveText,
 				removeText,
+				changeTextColor,
 				reset,
 			}}
 		>

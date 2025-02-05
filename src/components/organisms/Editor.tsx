@@ -7,8 +7,6 @@ import { ImagesIcon } from '@/components/atoms/icons/ImagesIcon';
 import { LogoIcon } from '@/components/atoms/icons/LogoIcon';
 import { ResetIcon } from '@/components/atoms/icons/ResetIcon';
 import { TextIcon } from '@/components/atoms/icons/TextIcon';
-import { TextArea } from '@/components/atoms/Textarea';
-import { Draggable } from '@/components/molecules/Draggable';
 import { ImageInput } from '@/components/molecules/ImageInput';
 import { usePosterContext } from '@/context/usePosterContext';
 

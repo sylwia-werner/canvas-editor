@@ -1,7 +1,9 @@
+import { TextColor } from '@/types/textColors';
+import { getBackgroundColor } from '@/utils/getColor';
 import classNames from 'classnames';
 
 interface Props {
-	color: 'bg-black-100' | 'bg-danger' | 'bg-blue' | 'bg-green' | 'bg-white';
+	color: string;
 	label: string;
 	isSelected: boolean;
 	onClick: () => void;
@@ -13,7 +15,7 @@ export const ColorButton = ({ color, label, isSelected, onClick }: Props) => {
 			className={classNames(
 				'h-4 w-4 cursor-pointer rounded-full',
 				{ 'ring-2 ring-white ring-offset-2': isSelected },
-				{ [`${color || 'black-50'}`]: color },
+				color || 'bg-black-75',
 			)}
 			style={{ backgroundColor: `bg-${color}` }}
 			onClick={onClick}

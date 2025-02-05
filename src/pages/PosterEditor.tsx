@@ -8,8 +8,15 @@ import { useRef } from 'react';
 import { Draggable } from '@/components/molecules/Draggable';
 
 export const PosterEditor = () => {
-	const { background, image, texts, updateText, moveText, removeText } =
-		usePosterContext();
+	const {
+		background,
+		image,
+		texts,
+		updateText,
+		moveText,
+		removeText,
+		changeTextColor,
+	} = usePosterContext();
 	const posterRef = useRef<HTMLDivElement>(null);
 
 	const shouldShowWelcomeImage = !background && !image && !texts.length;
@@ -37,7 +44,12 @@ export const PosterEditor = () => {
 								onDrag={moveText}
 								onRemove={() => removeText(text.id)}
 							>
-								<PosterText key={text.id} {...text} />
+								<PosterText
+									key={text.id}
+									currentTextColor={text.color}
+									changeTextColor={changeTextColor}
+									{...text}
+								/>
 							</Draggable>
 						))}
 					</Poster>

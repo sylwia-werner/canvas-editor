@@ -1,10 +1,14 @@
+import { TextColor } from '@/types/textColors';
+import { getTextColor } from '@/utils/getColor';
+import classNames from 'classnames';
 import { ChangeEvent, useEffect, useRef, useState } from 'react';
 
 interface Props {
 	onChange?: (value: string) => void;
+	textColor: string;
 }
 
-export const TextArea = ({ onChange }: Props) => {
+export const TextArea = ({ onChange, textColor }: Props) => {
 	const [value, setValue] = useState('');
 	const [fontSize, setFontSize] = useState(2);
 	const textareaRef = useRef<HTMLTextAreaElement>(null);
@@ -45,10 +49,17 @@ export const TextArea = ({ onChange }: Props) => {
 		setValue(value);
 	}, [value]);
 
+	useEffect(() => {
+		console.log(textColor);
+	}, [textColor]);
+
 	return (
 		<textarea
 			ref={textareaRef}
-			className="text-display h-full min-h-[7.5rem] w-full resize-none overflow-y-auto bg-transparent px-6 py-3 text-center leading-12 text-black-100 placeholder:opacity-50 focus-visible:outline-none"
+			className={classNames(
+				'text-display h-full min-h-[7.5rem] w-full resize-none overflow-y-auto bg-transparent px-6 py-3 text-center leading-12 placeholder:opacity-50 focus-visible:outline-none',
+				textColor || 'text-black-100',
+			)}
 			placeholder="Type your text here..."
 			onChange={handleChange}
 			style={{

@@ -92,7 +92,7 @@ export const Draggable = ({
 			/>
 			<IconButton
 				className="absolute -top-3 -right-3"
-				Icon={<DeleteIcon size={24} className="text-danger" />}
+				Icon={<DeleteIcon size={24} className="text-danger-100" />}
 				label="Remove item"
 				onClick={onRemove}
 			/>
