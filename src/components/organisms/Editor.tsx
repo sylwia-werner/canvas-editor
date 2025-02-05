@@ -9,17 +9,31 @@ import { ResetIcon } from '@/components/atoms/icons/ResetIcon';
 import { TextIcon } from '@/components/atoms/icons/TextIcon';
 import { ImageInput } from '@/components/molecules/ImageInput';
 import { usePosterContext } from '@/context/usePosterContext';
+import html2canvas from 'html2canvas';
 
-export const Editor = () => {
+interface Props {
+	canvasRef: React.RefObject<HTMLDivElement>;
+}
+
+export const Editor = ({ canvasRef }: Props) => {
 	const { addImage, setBackground, addText, reset } = usePosterContext();
 
-	const exportToPNG = () => {
-		const canvas = document.querySelector('canvas');
-		if (!canvas) return;
-		const link = document.createElement('a');
-		link.href = canvas.toDataURL();
-		link.download = 'poster.png';
-		link.click();
+	const handleExportImage = async () => {
+		if (canvasRef?.current) {
+			const html2canvasFunc = html2canvas;
+
+			const canvas = await html2canvasFunc(canvasRef.current, {
+				width: 1080,
+				height: 1350,
+				backgroundColor: null,
+			});
+			const image = canvas.toDataURL('image/png');
+
+			const link = document.createElement('a');
+			link.href = image;
+			link.download = 'image.png';
+			link.click();
+		}
 	};
 
 	return (
@@ -38,8 +52,6 @@ export const Editor = () => {
 				</div>
 			</div>
 			<Hr />
-
-			{/* <CanvasText /> */}
 
 			<div className="grid grid-cols-1 gap-8 sm:grid-cols-2">
 				<ActionButton
@@ -66,7 +78,7 @@ export const Editor = () => {
 				<div className="w-fit self-center sm:self-end">
 					<PrimaryButton
 						label="Export to png"
-						onClick={exportToPNG}
+						onClick={handleExportImage}
 					/>
 				</div>
 			</div>

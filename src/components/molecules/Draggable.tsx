@@ -8,26 +8,25 @@ import { useSpring, animated } from 'react-spring';
 interface Props {
 	id: string;
 	children: ReactNode;
-	// onDrag: (id: string, x: number, y: number) => void;
 	onRemove: () => void;
 	bounds?: { width: number; height: number };
 	initialPosition: { x: number; y: number };
+	initialSize: { x: number; y: number };
 }
 
 export const Draggable = ({
-	id,
 	children,
-	// onDrag,
 	onRemove,
 	bounds,
 	initialPosition,
+	initialSize,
 }: Props) => {
 	const [{ x, y, width, height }, api] = useSpring(() => ({
 		x: initialPosition.x,
 		y: initialPosition.y,
 		// TODO: Refactor
-		width: 350,
-		height: 120,
+		width: initialSize.x,
+		height: initialSize.y,
 	}));
 
 	const bindMove = useDrag(
@@ -36,8 +35,6 @@ export const Draggable = ({
 				x: dx,
 				y: dy,
 			});
-
-			// onDrag(id, dx, dy);
 		},
 		{
 			from: () => [x.get(), y.get()],
@@ -61,8 +58,8 @@ export const Draggable = ({
 			from: () => [width.get(), height.get()],
 			bounds: {
 				// TODO: Refactor
-				top: 120,
-				left: 350,
+				top: initialSize.y,
+				left: initialSize.x,
 				right: bounds?.width ? bounds.width - x.get() : 0,
 				bottom: bounds?.height ? bounds.height - y.get() : 0,
 			},

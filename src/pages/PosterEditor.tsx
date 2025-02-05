@@ -4,19 +4,16 @@ import { Editor } from '@/components/organisms/Editor';
 import { usePosterContext } from '@/context/usePosterContext';
 import { Poster } from '@/components/organisms/Poster';
 import { PosterText } from '@/components/organisms/PosterText';
-import { useEffect, useRef } from 'react';
+import { useRef } from 'react';
 import { Draggable } from '@/components/molecules/Draggable';
 
+const INITIAL_TEXTAREA_SIZE = { x: 350, y: 120 };
+const INITIAL_IMAGE_SIZE = { x: 150, y: 150 };
+
 export const PosterEditor = () => {
-	const {
-		background,
-		images,
-		texts,
-		removeText,
-		changeTextColor,
-		removeImage,
-	} = usePosterContext();
-	const posterRef = useRef<HTMLDivElement>(null);
+	const { background, images, texts, removeText, removeImage } =
+		usePosterContext();
+	const canvasRef = useRef<HTMLDivElement | null>(null);
 
 	const shouldShowWelcomeImage =
 		!background && !images.length && !texts.length;
@@ -26,13 +23,12 @@ export const PosterEditor = () => {
 		(images.length || texts.length)
 	);
 
-	useEffect(() => {
-		console.log(shouldShowWelcomeImage, 'SHOULD');
-	}, [shouldShowWelcomeImage]);
-
 	return (
 		<MainTemplate>
-			<div className="flex aspect-[4/5] w-full max-w-[759px]">
+			<div
+				className="flex aspect-[4/5] w-full max-w-[759px]"
+				ref={canvasRef}
+			>
 				{shouldShowWelcomeImage ? (
 					<img
 						src={welcomeImage}
@@ -42,7 +38,6 @@ export const PosterEditor = () => {
 				) : (
 					<Poster
 						background={background || undefined}
-						ref={posterRef}
 						isEmptyBackground={isDrawingInitialized}
 					>
 						{texts.map(text => (
@@ -50,13 +45,12 @@ export const PosterEditor = () => {
 								key={text.id}
 								id={text.id}
 								initialPosition={{ x: text.x, y: text.y }}
-								// onDrag={moveText}
 								onRemove={() => removeText(text.id)}
+								initialSize={INITIAL_TEXTAREA_SIZE}
 							>
 								<PosterText
 									key={text.id}
-									currentTextColor={text.color}
-									changeTextColor={changeTextColor}
+									initialTextColor={text.color}
 									{...text}
 								/>
 							</Draggable>
@@ -68,6 +62,7 @@ export const PosterEditor = () => {
 								id={image.id}
 								initialPosition={{ x: image.x, y: image.y }}
 								onRemove={() => removeImage(image.id)}
+								initialSize={INITIAL_IMAGE_SIZE}
 							>
 								<img
 									src={image.src}
@@ -80,7 +75,7 @@ export const PosterEditor = () => {
 				)}
 			</div>
 			<div className="flex aspect-[4/5] w-full max-w-[759px] bg-inherit">
-				<Editor />
+				<Editor canvasRef={canvasRef} />
 			</div>
 		</MainTemplate>
 	);

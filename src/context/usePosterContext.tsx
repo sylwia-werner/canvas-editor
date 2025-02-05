@@ -2,38 +2,32 @@ import { TextColor } from '@/types/textColors';
 import { createContext, ReactNode, useContext, useId, useState } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 
-export interface TextElement {
+export interface DraggableElement {
 	id: string;
-	// TODO: remove text
-	text: string;
 	x: number;
 	y: number;
+}
+
+export interface TextElement extends DraggableElement {
+	text: string;
 	color: TextColor;
-	// TODO: remove fontSize
 	fontSize: number;
 }
 
-export interface ImageElement {
-	id: string;
+export interface ImageElement extends DraggableElement {
 	src: string;
-	x: number;
-	y: number;
 	scale: number;
 }
 
 interface MemeContextType {
 	background: string | null;
-	texts: TextElement[];
 	setBackground: (image: string | null) => void;
+	texts: TextElement[];
 	addText: () => void;
-	// moveText: (id: string, x: number, y: number) => void;
-	changeTextColor: (id: string, color: TextColor) => void;
 	removeText: (id: string) => void;
-
 	images: ImageElement[];
 	addImage: (src: string) => void;
 	removeImage: (id: string) => void;
-
 	reset: () => void;
 }
 
@@ -82,42 +76,18 @@ export const PosterProvider = ({ children }: Args) => {
 		setImages(prev => prev.filter(img => img.id !== id));
 	};
 
-	// const updateText = (id: string, newText: string) => {
-	// 	setTexts(prev =>
-	// 		prev.map(text =>
-	// 			text.id === id ? { ...text, text: newText } : text,
-	// 		),
-	// 	);
-	// };
-
 	const removeText = (id: string) => {
 		setTexts(prev => prev.filter(text => text.id !== id));
-	};
-
-	// const moveText = (id: string, x: number, y: number) => {
-	// 	setTexts(prev =>
-	// 		prev.map(text => (text.id === id ? { ...text, x, y } : text)),
-	// 	);
-	// };
-
-	const changeTextColor = (id: string, color: TextColor) => {
-		setTexts(prev =>
-			prev.map(text => (text.id === id ? { ...text, color } : text)),
-		);
 	};
 
 	return (
 		<PosterContext.Provider
 			value={{
 				background,
-				texts,
 				setBackground,
-
+				texts,
 				addText,
-				// moveText,
 				removeText,
-				changeTextColor,
-
 				images,
 				addImage,
 				removeImage,

@@ -2,18 +2,15 @@ import { ColorButton } from '@/components/atoms/ColorButton';
 import { TextArea } from '@/components/atoms/Textarea';
 import { TEXT_COLORS, TextColor } from '@/types/textColors';
 import { getBackgroundColor, getTextColor } from '@/utils/getColor';
+import { useState } from 'react';
 
 interface Props {
-	id: string;
-	changeTextColor: (id: string, color: TextColor) => void;
-	currentTextColor: TextColor;
+	initialTextColor: TextColor;
 }
 
-export const PosterText = ({
-	id,
-	changeTextColor,
-	currentTextColor,
-}: Props) => {
+export const PosterText = ({ initialTextColor }: Props) => {
+	const [currentTextColor, setCurrentTextColor] = useState(initialTextColor);
+
 	return (
 		<>
 			<TextArea textColor={getTextColor(currentTextColor)} />
@@ -24,7 +21,7 @@ export const PosterText = ({
 						key={color}
 						color={getBackgroundColor(color)}
 						label={label}
-						onClick={() => changeTextColor(id, color)}
+						onClick={() => setCurrentTextColor(color)}
 						isSelected={currentTextColor === color}
 					/>
 				))}
