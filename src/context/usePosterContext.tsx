@@ -1,4 +1,5 @@
 import { createContext, ReactNode, useContext, useId, useState } from 'react';
+import { v4 as uuidv4 } from 'uuid';
 
 export interface TextElement {
 	id: string;
@@ -18,6 +19,7 @@ interface MemeContextType {
 	addText: () => void;
 	updateText: (id: string, newText: string) => void;
 	moveText: (id: string, x: number, y: number) => void;
+	removeText: (id: string) => void;
 	reset: () => void;
 }
 
@@ -31,7 +33,6 @@ export const PosterProvider = ({ children }: Args) => {
 	const [background, setBackground] = useState<string | null>(null);
 	const [image, setImage] = useState<string | null>(null);
 	const [texts, setTexts] = useState<TextElement[]>([]);
-	const id = useId();
 
 	const reset = () => {
 		setBackground(null);
@@ -41,7 +42,7 @@ export const PosterProvider = ({ children }: Args) => {
 
 	const addText = () => {
 		const newText: TextElement = {
-			id,
+			id: uuidv4(),
 			text: 'New Text',
 			x: 50,
 			y: 50,
@@ -53,12 +54,34 @@ export const PosterProvider = ({ children }: Args) => {
 
 	const updateText = (id: string, newText: string) => {
 		setTexts(prev =>
-			prev.map(t => (t.id === id ? { ...t, text: newText } : t)),
+			prev.map(text =>
+				text.id === id ? { ...text, text: newText } : text,
+			),
 		);
 	};
 
+	const removeText = (id: string) => {
+		setTexts(prev => prev.filter(text => text.id !== id));
+	};
+
 	const moveText = (id: string, x: number, y: number) => {
-		setTexts(prev => prev.map(t => (t.id === id ? { ...t, x, y } : t)));
+		setTexts(prev =>
+			prev.map(text => (text.id === id ? { ...text, x, y } : text)),
+		);
+	};
+
+	const changeTextColor = (
+		id: string,
+		color:
+			| 'bg-black-100'
+			| 'bg-danger'
+			| 'bg-blue'
+			| 'bg-green'
+			| 'bg-white',
+	) => {
+		setTexts(prev =>
+			prev.map(text => (text.id === id ? { ...text, color } : text)),
+		);
 	};
 
 	return (
@@ -72,6 +95,7 @@ export const PosterProvider = ({ children }: Args) => {
 				addText,
 				updateText,
 				moveText,
+				removeText,
 				reset,
 			}}
 		>

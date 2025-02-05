@@ -1,11 +1,14 @@
 import { MainTemplate } from '@/components/templates/MainTemplate';
 import welcomeImage from '@/assets/canvas-default-img.png';
 import { Editor } from '@/components/organisms/Editor';
-import { Canvas } from '@/components/organisms/Canvas';
 import { usePosterContext } from '@/context/usePosterContext';
+import { Poster } from '@/components/organisms/Poster';
+import { PosterText } from '@/components/organisms/PosterText';
+import { useEffect, useRef } from 'react';
 
-export const CanvasEditor = () => {
+export const PosterEditor = () => {
 	const { background, image, texts } = usePosterContext();
+	const posterRef = useRef<HTMLDivElement>(null);
 
 	const shouldShowWelcomeImage = !background && !image && !texts.length;
 	const isDrawingInitialized = !!(!background && (image || texts.length));
@@ -20,12 +23,14 @@ export const CanvasEditor = () => {
 						className="h-full w-full"
 					/>
 				) : (
-					<Canvas
+					<Poster
+						ref={posterRef}
 						isEmptyBackground={isDrawingInitialized}
-						background={background}
-						image={image}
-						texts={texts}
-					/>
+					>
+						{texts.map(text => (
+							<PosterText key={text.id} {...text} />
+						))}
+					</Poster>
 				)}
 			</div>
 			<div className="flex aspect-[4/5] w-full max-w-[759px] bg-inherit">

@@ -7,12 +7,7 @@ interface Props {
 	onClick: () => void;
 }
 
-export const CanvasColorButton = ({
-	color,
-	label,
-	isSelected,
-	onClick,
-}: Props) => {
+export const ColorButton = ({ color, label, isSelected, onClick }: Props) => {
 	return (
 		<button
 			className={classNames(
@@ -20,7 +15,7 @@ export const CanvasColorButton = ({
 				{ 'ring-2 ring-white ring-offset-2': isSelected },
 				{ [`${color || 'black-50'}`]: color },
 			)}
-			// style={{ backgroundColor: `bg-${color}` }}
+			style={{ backgroundColor: `bg-${color}` }}
 			onClick={onClick}
 		>
 			<span className="hidden">{label}</span>
