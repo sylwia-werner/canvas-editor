@@ -7,8 +7,8 @@ import { PosterText } from '@/components/organisms/PosterText';
 import { useRef } from 'react';
 import { Draggable } from '@/components/molecules/Draggable';
 
-const INITIAL_TEXTAREA_SIZE = { x: 350, y: 120 };
-const INITIAL_IMAGE_SIZE = { x: 150, y: 150 };
+const INITIAL_TEXTAREA_SIZE = { width: 350, height: 120 };
+const INITIAL_IMAGE_SIZE = { width: 150, height: 150 };
 
 export const PosterEditor = () => {
 	const { background, images, texts, removeText, removeImage } =

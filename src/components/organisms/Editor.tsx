@@ -11,6 +11,8 @@ import { ImageInput } from '@/components/molecules/ImageInput';
 import { usePosterContext } from '@/context/usePosterContext';
 import html2canvas from 'html2canvas';
 
+const EXPORT_CONFIG = { width: 1080, height: 1350, backgroundColor: null };
+
 interface Props {
 	canvasRef: React.RefObject<HTMLDivElement>;
 }
@@ -20,12 +22,8 @@ export const Editor = ({ canvasRef }: Props) => {
 
 	const handleExportImage = async () => {
 		if (canvasRef?.current) {
-			const html2canvasFunc = html2canvas;
-
-			const canvas = await html2canvasFunc(canvasRef.current, {
-				width: 1080,
-				height: 1350,
-				backgroundColor: null,
+			const canvas = await html2canvas(canvasRef.current, {
+				...EXPORT_CONFIG,
 			});
 			const image = canvas.toDataURL('image/png');
 
