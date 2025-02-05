@@ -25,6 +25,7 @@ export const Draggable = ({
 	const [{ x, y, width, height }, api] = useSpring(() => ({
 		x: initialPosition.x,
 		y: initialPosition.y,
+		// TODO: Refactor
 		width: 350,
 		height: 120,
 	}));
@@ -59,8 +60,9 @@ export const Draggable = ({
 		{
 			from: () => [width.get(), height.get()],
 			bounds: {
-				top: height.get(),
-				left: width.get(),
+				// TODO: Refactor
+				top: 120,
+				left: 350,
 				right: bounds?.width ? bounds.width - x.get() : 0,
 				bottom: bounds?.height ? bounds.height - y.get() : 0,
 			},
