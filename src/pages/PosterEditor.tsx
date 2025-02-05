@@ -7,17 +7,28 @@ import { PosterText } from '@/components/organisms/PosterText';
 import { useRef } from 'react';
 import { Draggable } from '@/components/molecules/Draggable';
 
-export const PosterEditor = () => {
-	const { background, image, texts, moveText, removeText, changeTextColor } =
-		usePosterContext();
-	const posterRef = useRef<HTMLDivElement>(null);
+const INITIAL_TEXTAREA_SIZE = { width: 350, height: 120 };
+const INITIAL_IMAGE_SIZE = { width: 150, height: 150 };
 
-	const shouldShowWelcomeImage = !background && !image && !texts.length;
-	const isDrawingInitialized = !!(!background && (image || texts.length));
+export const PosterEditor = () => {
+	const { background, images, texts, removeText, removeImage } =
+		usePosterContext();
+	const canvasRef = useRef<HTMLDivElement | null>(null);
+
+	const shouldShowWelcomeImage =
+		!background && !images.length && !texts.length;
+
+	const isDrawingInitialized = !!(
+		!background &&
+		(images.length || texts.length)
+	);
 
 	return (
 		<MainTemplate>
-			<div className="flex aspect-[4/5] w-full max-w-[759px]">
+			<div
+				className="flex aspect-[4/5] w-full max-w-[759px]"
+				ref={canvasRef}
+			>
 				{shouldShowWelcomeImage ? (
 					<img
 						src={welcomeImage}
@@ -26,7 +37,7 @@ export const PosterEditor = () => {
 					/>
 				) : (
 					<Poster
-						ref={posterRef}
+						background={background || undefined}
 						isEmptyBackground={isDrawingInitialized}
 					>
 						{texts.map(text => (
@@ -34,14 +45,29 @@ export const PosterEditor = () => {
 								key={text.id}
 								id={text.id}
 								initialPosition={{ x: text.x, y: text.y }}
-								onDrag={moveText}
 								onRemove={() => removeText(text.id)}
+								initialSize={INITIAL_TEXTAREA_SIZE}
 							>
 								<PosterText
 									key={text.id}
-									currentTextColor={text.color}
-									changeTextColor={changeTextColor}
+									initialTextColor={text.color}
 									{...text}
+								/>
+							</Draggable>
+						))}
+
+						{images.map(image => (
+							<Draggable
+								key={image.id}
+								id={image.id}
+								initialPosition={{ x: image.x, y: image.y }}
+								onRemove={() => removeImage(image.id)}
+								initialSize={INITIAL_IMAGE_SIZE}
+							>
+								<img
+									src={image.src}
+									alt="Image"
+									className="h-full w-full object-cover"
 								/>
 							</Draggable>
 						))}
@@ -49,7 +75,7 @@ export const PosterEditor = () => {
 				)}
 			</div>
 			<div className="flex aspect-[4/5] w-full max-w-[759px] bg-inherit">
-				<Editor />
+				<Editor canvasRef={canvasRef} />
 			</div>
 		</MainTemplate>
 	);

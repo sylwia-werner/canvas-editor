@@ -1,6 +1,8 @@
 import { IconButton } from '@/components/atoms/IconButton';
 import { DeleteIcon } from '@/components/atoms/icons/DeleteIcon';
 import { MoveIcon } from '@/components/atoms/icons/MoveIcon';
+import { Coordinates } from '@/types/coordinates';
+import { Size } from '@/types/size';
 import { useDrag } from '@use-gesture/react';
 import { ReactNode } from 'react';
 import { useSpring, animated } from 'react-spring';
@@ -8,26 +10,24 @@ import { useSpring, animated } from 'react-spring';
 interface Props {
 	id: string;
 	children: ReactNode;
-	onDrag: (id: string, x: number, y: number) => void;
 	onRemove: () => void;
-	bounds?: { width: number; height: number };
-	initialPosition: { x: number; y: number };
+	bounds?: Size;
+	initialPosition: Coordinates;
+	initialSize: Size;
 }
 
 export const Draggable = ({
-	id,
 	children,
-	onDrag,
 	onRemove,
 	bounds,
 	initialPosition,
+	initialSize,
 }: Props) => {
 	const [{ x, y, width, height }, api] = useSpring(() => ({
 		x: initialPosition.x,
 		y: initialPosition.y,
-		// TODO: Refactor
-		width: 350,
-		height: 120,
+		width: initialSize.width,
+		height: initialSize.height,
 	}));
 
 	const bindMove = useDrag(
@@ -36,8 +36,6 @@ export const Draggable = ({
 				x: dx,
 				y: dy,
 			});
-
-			onDrag(id, dx, dy);
 		},
 		{
 			from: () => [x.get(), y.get()],
@@ -60,9 +58,8 @@ export const Draggable = ({
 		{
 			from: () => [width.get(), height.get()],
 			bounds: {
-				// TODO: Refactor
-				top: 120,
-				left: 350,
+				top: initialSize.height,
+				left: initialSize.width,
 				right: bounds?.width ? bounds.width - x.get() : 0,
 				bottom: bounds?.height ? bounds.height - y.get() : 0,
 			},
