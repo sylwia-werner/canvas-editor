@@ -1,11 +1,16 @@
 import { MainTemplate } from '@/components/templates/MainTemplate';
 import welcomeImage from '@/assets/canvas-default-img.png';
 import { Editor } from '@/components/organisms/Editor';
-import { Canvas } from '@/components/organisms/Canvas';
 import { usePosterContext } from '@/context/usePosterContext';
+import { Poster } from '@/components/organisms/Poster';
+import { PosterText } from '@/components/organisms/PosterText';
+import { useRef } from 'react';
+import { Draggable } from '@/components/molecules/Draggable';
 
-export const CanvasEditor = () => {
-	const { background, image, texts } = usePosterContext();
+export const PosterEditor = () => {
+	const { background, image, texts, moveText, removeText, changeTextColor } =
+		usePosterContext();
+	const posterRef = useRef<HTMLDivElement>(null);
 
 	const shouldShowWelcomeImage = !background && !image && !texts.length;
 	const isDrawingInitialized = !!(!background && (image || texts.length));
@@ -20,12 +25,27 @@ export const CanvasEditor = () => {
 						className="h-full w-full"
 					/>
 				) : (
-					<Canvas
+					<Poster
+						ref={posterRef}
 						isEmptyBackground={isDrawingInitialized}
-						background={background}
-						image={image}
-						texts={texts}
-					/>
+					>
+						{texts.map(text => (
+							<Draggable
+								key={text.id}
+								id={text.id}
+								initialPosition={{ x: text.x, y: text.y }}
+								onDrag={moveText}
+								onRemove={() => removeText(text.id)}
+							>
+								<PosterText
+									key={text.id}
+									currentTextColor={text.color}
+									changeTextColor={changeTextColor}
+									{...text}
+								/>
+							</Draggable>
+						))}
+					</Poster>
 				)}
 			</div>
 			<div className="flex aspect-[4/5] w-full max-w-[759px] bg-inherit">

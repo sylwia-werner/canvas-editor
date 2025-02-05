@@ -1,10 +1,10 @@
 import { PosterProvider } from '@/context/usePosterContext';
-import { CanvasEditor } from '@/pages/CanvasEditor';
+import { PosterEditor } from '@/pages/PosterEditor';
 
 function App() {
 	return (
 		<PosterProvider>
-			<CanvasEditor />
+			<PosterEditor />
 		</PosterProvider>
 	);
 }
