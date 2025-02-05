@@ -20,7 +20,7 @@ export const TextArea = ({ onChange }: Props) => {
 
 	return (
 		<textarea
-			className="text-display min-h-[7.5rem] max-w-[21.875rem] resize-none overflow-y-auto bg-transparent px-6 py-3 text-center leading-12 text-black-100 placeholder:opacity-50 focus-visible:outline-none"
+			className="text-display h-full min-h-[7.5rem] w-full resize-none overflow-y-auto bg-transparent px-6 py-3 text-center leading-12 text-black-100 placeholder:opacity-50 focus-visible:outline-none"
 			placeholder="Type your text here..."
 			onChange={handleChange}
 			value={value}

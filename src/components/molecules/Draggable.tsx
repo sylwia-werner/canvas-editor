@@ -1,8 +1,9 @@
 import { IconButton } from '@/components/atoms/IconButton';
 import { DeleteIcon } from '@/components/atoms/icons/DeleteIcon';
 import { MoveIcon } from '@/components/atoms/icons/MoveIcon';
-import { useGesture } from '@use-gesture/react';
-import { ReactNode, useEffect, useRef, useState } from 'react';
+import { useDrag } from '@use-gesture/react';
+import { ReactNode } from 'react';
+import { useSpring, animated } from 'react-spring';
 
 interface Props {
 	id: string;
@@ -21,96 +22,87 @@ export const Draggable = ({
 	bounds,
 	initialPosition,
 }: Props) => {
-	const draggableRef = useRef<HTMLDivElement>(null);
+	const [{ x, y, width, height }, api] = useSpring(() => ({
+		x: initialPosition.x,
+		y: initialPosition.y,
+		width: 350,
+		height: 120,
+	}));
 
-	const [position, setPosition] = useState({
-		x: initialPosition?.x || 0,
-		y: initialPosition?.y || 0,
-	});
+	const bindMove = useDrag(
+		({ offset: [dx, dy] }) => {
+			api.set({
+				x: dx,
+				y: dy,
+			});
 
-	const [elementSize, setElementSize] = useState({ width: 0, height: 0 });
-
-	const adjustedBounds = bounds
-		? {
-				width: bounds.width - elementSize.width,
-				height: bounds.height - elementSize.height,
-			}
-		: undefined;
-
-	const handleDrag = ({ x, y }: { x: number; y: number }) => {
-		setPosition({ x, y });
-		onDrag(id, x, y);
-	};
-
-	useEffect(() => {
-		if (draggableRef.current) {
-			const { width, height } =
-				draggableRef.current.getBoundingClientRect();
-			setElementSize({ width, height });
-		}
-	}, []);
-
-	const bind = useGesture(
+			onDrag(id, dx, dy);
+		},
 		{
-			onDrag: ({ offset: [dx, dy] }) => {
-				const x = Math.min(Math.max(dx, 0), adjustedBounds?.width || 0);
-				const y = Math.min(
-					Math.max(dy, 0),
-					adjustedBounds?.height || 0,
-				);
-				handleDrag({ x: x, y: y });
+			from: () => [x.get(), y.get()],
+			bounds: {
+				left: 0,
+				top: 0,
+				right: bounds?.width ? bounds.width - width.get() : 0,
+				bottom: bounds?.height ? bounds.height - height.get() : 0,
 			},
 		},
+	);
 
+	const bindResize = useDrag(
+		({ offset: [dx, dy] }) => {
+			api.set({
+				width: dx,
+				height: dy,
+			});
+		},
 		{
-			drag: {
-				filterTaps: true,
-				bounds: adjustedBounds
-					? {
-							left: 0,
-							top: 0,
-							right: adjustedBounds.width,
-							bottom: adjustedBounds.height,
-						}
-					: undefined,
+			from: () => [width.get(), height.get()],
+			bounds: {
+				top: height.get(),
+				left: width.get(),
+				right: bounds?.width ? bounds.width - x.get() : 0,
+				bottom: bounds?.height ? bounds.height - y.get() : 0,
 			},
 		},
 	);
 
 	return (
-		<div
-			ref={draggableRef}
+		<animated.div
 			style={{
-				transform: `translate(${position.x}px, ${position.y}px)`,
-				// color: currentElement.color,
+				x,
+				y,
+				width,
+				height,
+				position: 'absolute',
 			}}
 			className="absolute w-fit outline-2 outline-primary"
 		>
 			<IconButton
+				className="absolute -top-5 -left-5 cursor-grab touch-none select-none active:cursor-grabbing"
 				Icon={
 					<div className="p-1">
 						<MoveIcon size={32} className="text-primary" />
 					</div>
 				}
 				label="Move item"
-				className="absolute -top-5 -left-5 cursor-grab touch-none select-none active:cursor-grabbing"
-				{...bind()}
+				{...bindMove()}
 			/>
 			<IconButton
+				className="absolute -top-3 -right-3"
 				Icon={<DeleteIcon size={24} className="text-danger" />}
 				label="Remove item"
 				onClick={onRemove}
-				className="absolute -top-3 -right-3"
 			/>
 			<IconButton
+				className="absolute -right-3 -bottom-3 cursor-se-resize"
 				Icon={
 					<div className="relative h-6 w-6 rounded-full bg-white p-1 after:absolute after:top-1/2 after:left-1/2 after:h-3 after:w-3 after:-translate-x-1/2 after:-translate-y-1/2 after:rounded-full after:bg-primary after:content-['']" />
 				}
 				label="Resize item"
-				onClick={() => console.log('resize')}
-				className="absolute -right-3 -bottom-3 cursor-se-resize"
+				{...bindResize()}
 			/>
 			{children}
-		</div>
+		</animated.div>
 	);
 };
