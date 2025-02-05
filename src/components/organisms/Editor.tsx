@@ -11,7 +11,7 @@ import { ImageInput } from '@/components/molecules/ImageInput';
 import { usePosterContext } from '@/context/usePosterContext';
 
 export const Editor = () => {
-	const { setImage, setBackground, addText, reset } = usePosterContext();
+	const { addImage, setBackground, addText, reset } = usePosterContext();
 
 	const exportToPNG = () => {
 		const canvas = document.querySelector('canvas');
@@ -50,7 +50,7 @@ export const Editor = () => {
 				<ImageInput
 					label="Image"
 					Icon={<ImagesIcon size={128} className="text-black-75" />}
-					setImageFile={setImage}
+					setImageFile={addImage}
 				/>
 				<ImageInput
 					label="Background"

@@ -8,7 +8,7 @@ import { useSpring, animated } from 'react-spring';
 interface Props {
 	id: string;
 	children: ReactNode;
-	onDrag: (id: string, x: number, y: number) => void;
+	// onDrag: (id: string, x: number, y: number) => void;
 	onRemove: () => void;
 	bounds?: { width: number; height: number };
 	initialPosition: { x: number; y: number };
@@ -17,7 +17,7 @@ interface Props {
 export const Draggable = ({
 	id,
 	children,
-	onDrag,
+	// onDrag,
 	onRemove,
 	bounds,
 	initialPosition,
@@ -37,7 +37,7 @@ export const Draggable = ({
 				y: dy,
 			});
 
-			onDrag(id, dx, dy);
+			// onDrag(id, dx, dy);
 		},
 		{
 			from: () => [x.get(), y.get()],

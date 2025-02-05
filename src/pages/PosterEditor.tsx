@@ -4,16 +4,31 @@ import { Editor } from '@/components/organisms/Editor';
 import { usePosterContext } from '@/context/usePosterContext';
 import { Poster } from '@/components/organisms/Poster';
 import { PosterText } from '@/components/organisms/PosterText';
-import { useRef } from 'react';
+import { useEffect, useRef } from 'react';
 import { Draggable } from '@/components/molecules/Draggable';
 
 export const PosterEditor = () => {
-	const { background, image, texts, moveText, removeText, changeTextColor } =
-		usePosterContext();
+	const {
+		background,
+		images,
+		texts,
+		removeText,
+		changeTextColor,
+		removeImage,
+	} = usePosterContext();
 	const posterRef = useRef<HTMLDivElement>(null);
 
-	const shouldShowWelcomeImage = !background && !image && !texts.length;
-	const isDrawingInitialized = !!(!background && (image || texts.length));
+	const shouldShowWelcomeImage =
+		!background && !images.length && !texts.length;
+
+	const isDrawingInitialized = !!(
+		!background &&
+		(images.length || texts.length)
+	);
+
+	useEffect(() => {
+		console.log(shouldShowWelcomeImage, 'SHOULD');
+	}, [shouldShowWelcomeImage]);
 
 	return (
 		<MainTemplate>
@@ -26,6 +41,7 @@ export const PosterEditor = () => {
 					/>
 				) : (
 					<Poster
+						background={background || undefined}
 						ref={posterRef}
 						isEmptyBackground={isDrawingInitialized}
 					>
@@ -34,7 +50,7 @@ export const PosterEditor = () => {
 								key={text.id}
 								id={text.id}
 								initialPosition={{ x: text.x, y: text.y }}
-								onDrag={moveText}
+								// onDrag={moveText}
 								onRemove={() => removeText(text.id)}
 							>
 								<PosterText
@@ -42,6 +58,21 @@ export const PosterEditor = () => {
 									currentTextColor={text.color}
 									changeTextColor={changeTextColor}
 									{...text}
+								/>
+							</Draggable>
+						))}
+
+						{images.map(image => (
+							<Draggable
+								key={image.id}
+								id={image.id}
+								initialPosition={{ x: image.x, y: image.y }}
+								onRemove={() => removeImage(image.id)}
+							>
+								<img
+									src={image.src}
+									alt="Image"
+									className="h-full w-full object-cover"
 								/>
 							</Draggable>
 						))}

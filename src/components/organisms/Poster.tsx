@@ -11,12 +11,13 @@ import {
 } from 'react';
 
 interface Props {
+	background?: string;
 	isEmptyBackground?: boolean;
 	children?: ReactNode;
 }
 
 export const Poster = forwardRef<HTMLDivElement, Props>(
-	({ isEmptyBackground = false, children }, ref) => {
+	({ background, isEmptyBackground = false, children }, ref) => {
 		const posterRef = useRef<HTMLDivElement>(null);
 		const [bounds, setBounds] = useState({ width: 0, height: 0 });
 
@@ -41,7 +42,11 @@ export const Poster = forwardRef<HTMLDivElement, Props>(
 					{
 						'bg-black-50': isEmptyBackground,
 					},
+					{
+						'bg-cover bg-center': background,
+					},
 				)}
+				style={{ backgroundImage: `url(${background})` }}
 			>
 				<div className="relative inset-0">
 					{Children.map(children, child =>

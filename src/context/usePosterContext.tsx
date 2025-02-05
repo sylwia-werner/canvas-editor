@@ -4,23 +4,36 @@ import { v4 as uuidv4 } from 'uuid';
 
 export interface TextElement {
 	id: string;
+	// TODO: remove text
 	text: string;
 	x: number;
 	y: number;
 	color: TextColor;
+	// TODO: remove fontSize
 	fontSize: number;
+}
+
+export interface ImageElement {
+	id: string;
+	src: string;
+	x: number;
+	y: number;
+	scale: number;
 }
 
 interface MemeContextType {
 	background: string | null;
-	image: string | null;
 	texts: TextElement[];
 	setBackground: (image: string | null) => void;
-	setImage: (image: string | null) => void;
 	addText: () => void;
-	moveText: (id: string, x: number, y: number) => void;
+	// moveText: (id: string, x: number, y: number) => void;
 	changeTextColor: (id: string, color: TextColor) => void;
 	removeText: (id: string) => void;
+
+	images: ImageElement[];
+	addImage: (src: string) => void;
+	removeImage: (id: string) => void;
+
 	reset: () => void;
 }
 
@@ -32,12 +45,13 @@ const PosterContext = createContext<MemeContextType | undefined>(undefined);
 
 export const PosterProvider = ({ children }: Args) => {
 	const [background, setBackground] = useState<string | null>(null);
-	const [image, setImage] = useState<string | null>(null);
+	const [images, setImages] = useState<ImageElement[]>([]);
+
 	const [texts, setTexts] = useState<TextElement[]>([]);
 
 	const reset = () => {
 		setBackground(null);
-		setImage(null);
+		setImages([]);
 		setTexts([]);
 	};
 
@@ -53,6 +67,21 @@ export const PosterProvider = ({ children }: Args) => {
 		setTexts(prev => [...prev, newText]);
 	};
 
+	const addImage = (src: string) => {
+		const newImage: ImageElement = {
+			id: uuidv4(),
+			src,
+			x: 50,
+			y: 50,
+			scale: 1,
+		};
+		setImages(prev => [...prev, newImage]);
+	};
+
+	const removeImage = (id: string) => {
+		setImages(prev => prev.filter(img => img.id !== id));
+	};
+
 	// const updateText = (id: string, newText: string) => {
 	// 	setTexts(prev =>
 	// 		prev.map(text =>
@@ -65,11 +94,11 @@ export const PosterProvider = ({ children }: Args) => {
 		setTexts(prev => prev.filter(text => text.id !== id));
 	};
 
-	const moveText = (id: string, x: number, y: number) => {
-		setTexts(prev =>
-			prev.map(text => (text.id === id ? { ...text, x, y } : text)),
-		);
-	};
+	// const moveText = (id: string, x: number, y: number) => {
+	// 	setTexts(prev =>
+	// 		prev.map(text => (text.id === id ? { ...text, x, y } : text)),
+	// 	);
+	// };
 
 	const changeTextColor = (id: string, color: TextColor) => {
 		setTexts(prev =>
@@ -81,14 +110,17 @@ export const PosterProvider = ({ children }: Args) => {
 		<PosterContext.Provider
 			value={{
 				background,
-				image,
 				texts,
 				setBackground,
-				setImage,
+
 				addText,
-				moveText,
+				// moveText,
 				removeText,
 				changeTextColor,
+
+				images,
+				addImage,
+				removeImage,
 				reset,
 			}}
 		>
