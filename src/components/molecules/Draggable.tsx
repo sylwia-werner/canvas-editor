@@ -22,10 +22,12 @@ export const Draggable = ({
 	initialPosition,
 }: Props) => {
 	const draggableRef = useRef<HTMLDivElement>(null);
+
 	const [position, setPosition] = useState({
 		x: initialPosition?.x || 0,
 		y: initialPosition?.y || 0,
 	});
+
 	const [elementSize, setElementSize] = useState({ width: 0, height: 0 });
 
 	const adjustedBounds = bounds
@@ -34,9 +36,6 @@ export const Draggable = ({
 				height: bounds.height - elementSize.height,
 			}
 		: undefined;
-	useEffect(() => {
-		console.log(bounds);
-	}, [bounds]);
 
 	const handleDrag = ({ x, y }: { x: number; y: number }) => {
 		setPosition({ x, y });
@@ -60,11 +59,6 @@ export const Draggable = ({
 					adjustedBounds?.height || 0,
 				);
 				handleDrag({ x: x, y: y });
-				// 	// moveText(id, dx, dy);
-				// },
-				// onPinch: ({ offset: [s] }) => {
-				// 	setScale(s);
-				// },
 			},
 		},
 
@@ -80,8 +74,6 @@ export const Draggable = ({
 						}
 					: undefined,
 			},
-
-			// pinch: { scaleBounds: { min: 0.5, max: 3 } },
 		},
 	);
 
@@ -90,19 +82,10 @@ export const Draggable = ({
 			ref={draggableRef}
 			style={{
 				transform: `translate(${position.x}px, ${position.y}px)`,
-				position: 'absolute',
-				touchAction: 'none',
 				// color: currentElement.color,
-				// fontSize: `${currentElement.fontSize}px`,
 			}}
-			className="w-fit outline-2 outline-primary"
+			className="absolute w-fit outline-2 outline-primary"
 		>
-			<IconButton
-				className="absolute -top-5 -left-5 cursor-grab touch-none select-none active:cursor-grabbing"
-				Icon={<MoveIcon size={32} className="text-primary" />}
-				label="Move item"
-				{...bind()}
-			/>
 			<IconButton
 				Icon={
 					<div className="p-1">
@@ -110,7 +93,7 @@ export const Draggable = ({
 					</div>
 				}
 				label="Move item"
-				className="cursor grab absolute -top-5 -left-5 active:cursor-grabbing"
+				className="absolute -top-5 -left-5 cursor-grab touch-none select-none active:cursor-grabbing"
 				{...bind()}
 			/>
 			<IconButton

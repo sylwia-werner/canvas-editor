@@ -1,9 +1,7 @@
 import { ColorButton } from '@/components/atoms/ColorButton';
 import { TextArea } from '@/components/atoms/Textarea';
-import { Draggable } from '@/components/molecules/Draggable';
 import { usePosterContext } from '@/context/usePosterContext';
-import { useGesture } from '@use-gesture/react';
-import { useEffect, useRef, useState } from 'react';
+import { useState } from 'react';
 
 // const COLORS_CONFIG = {
 // 	black: {
@@ -18,10 +16,7 @@ interface Props {
 }
 
 export const PosterText = ({ id }: Props) => {
-	const { updateText, moveText, removeText, texts } = usePosterContext();
-	const currentElement = texts.find(text => text.id === id);
-
-	const [scale, setScale] = useState(1);
+	const { updateText, texts } = usePosterContext();
 
 	return (
 		<>
