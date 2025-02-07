@@ -6,7 +6,7 @@ import { Coordinates } from '@/types/coordinates';
 import { Size } from '@/types/size';
 import { useDrag } from '@use-gesture/react';
 import classNames from 'classnames';
-import { ReactNode } from 'react';
+import { ReactNode, useEffect } from 'react';
 import { useSpring, animated } from 'react-spring';
 
 interface Props {
@@ -44,8 +44,8 @@ export const Draggable = ({
 			bounds: {
 				left: 0,
 				top: 0,
-				right: bounds?.width ? bounds.width - width.get() : 0,
-				bottom: bounds?.height ? bounds.height - height.get() : 0,
+				right: bounds ? bounds.width - width.get() : 0,
+				bottom: bounds ? bounds.height - height.get() : 0,
 			},
 		},
 	);
@@ -62,8 +62,8 @@ export const Draggable = ({
 			bounds: {
 				top: initialSize.height,
 				left: initialSize.width,
-				right: bounds?.width ? bounds.width - x.get() : 0,
-				bottom: bounds?.height ? bounds.height - y.get() : 0,
+				right: bounds ? bounds.width - x.get() : 0,
+				bottom: bounds ? bounds.height - y.get() : 0,
 			},
 		},
 	);
@@ -77,7 +77,7 @@ export const Draggable = ({
 				height,
 				position: 'absolute',
 			}}
-			className="absolute w-fit outline-2 outline-primary"
+			className="w-fit outline-2 outline-primary"
 		>
 			<IconButton
 				className={classNames(

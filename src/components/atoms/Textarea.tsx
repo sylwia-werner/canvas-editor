@@ -18,7 +18,6 @@ export const TextArea = ({ textColor }: Props) => {
 	const computeFontSize = (height: number) => {
 		const computed = height / 100;
 		const clamped = Math.min(4, Math.max(2, computed));
-		console.log(clamped);
 
 		return clamped;
 	};
