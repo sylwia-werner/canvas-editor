@@ -6,7 +6,7 @@ import { Coordinates } from '@/types/coordinates';
 import { Size } from '@/types/size';
 import { useDrag } from '@use-gesture/react';
 import classNames from 'classnames';
-import { ReactNode, useEffect } from 'react';
+import { ReactNode } from 'react';
 import { useSpring, animated } from 'react-spring';
 
 interface Props {
