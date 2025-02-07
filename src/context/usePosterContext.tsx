@@ -1,4 +1,4 @@
-import { TextColor } from '@/types/textColors';
+import { TextColor } from '@/types/toolbarColors';
 import { createContext, ReactNode, useContext, useState } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 
@@ -55,7 +55,7 @@ export const PosterProvider = ({ children }: Args) => {
 			text: 'New Text',
 			x: 50,
 			y: 50,
-			color: 'black-100',
+			color: 'text-black-100',
 			fontSize: 24,
 		};
 		setTexts(prev => [...prev, newText]);

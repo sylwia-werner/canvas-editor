@@ -1,7 +1,6 @@
 import { ColorButton } from '@/components/atoms/ColorButton';
 import { TextArea } from '@/components/atoms/Textarea';
-import { TEXT_COLORS, TextColor } from '@/types/textColors';
-import { getBackgroundColor, getTextColor } from '@/utils/getColor';
+import { TOOLBAR_COLORS, TextColor } from '@/types/toolbarColors';
 import { useState } from 'react';
 
 interface Props {
@@ -13,13 +12,13 @@ export const PosterText = ({ initialTextColor }: Props) => {
 
 	return (
 		<>
-			<TextArea textColor={getTextColor(currentTextColor)} />
+			<TextArea textColor={currentTextColor} />
 
 			<div className="absolute -bottom-6 left-0 flex gap-3">
-				{TEXT_COLORS.map(({ color, label }) => (
+				{TOOLBAR_COLORS.map(({ color, bgColor, label }) => (
 					<ColorButton
-						key={color}
-						color={getBackgroundColor(color)}
+						key={label}
+						color={bgColor}
 						label={label}
 						onClick={() => setCurrentTextColor(color)}
 						isSelected={currentTextColor === color}

@@ -19,7 +19,6 @@ export const ColorButton = ({ color, label, isSelected, onClick }: Props) => {
 					[`${CONFIG_EXCLUDE_EXPORT_CLASS}`]: true,
 				},
 			)}
-			style={{ backgroundColor: `bg-${color}` }}
 			onClick={onClick}
 		>
 			<span className="hidden">{label}</span>
