@@ -1,9 +1,11 @@
 import { IconButton } from '@/components/atoms/IconButton';
 import { DeleteIcon } from '@/components/atoms/icons/DeleteIcon';
 import { MoveIcon } from '@/components/atoms/icons/MoveIcon';
+import { CONFIG_EXCLUDE_EXPORT_CLASS } from '@/constants';
 import { Coordinates } from '@/types/coordinates';
 import { Size } from '@/types/size';
 import { useDrag } from '@use-gesture/react';
+import classNames from 'classnames';
 import { ReactNode } from 'react';
 import { useSpring, animated } from 'react-spring';
 
@@ -78,7 +80,12 @@ export const Draggable = ({
 			className="absolute w-fit outline-2 outline-primary"
 		>
 			<IconButton
-				className="absolute -top-5 -left-5 cursor-grab touch-none select-none active:cursor-grabbing"
+				className={classNames(
+					'absolute -top-5 -left-5 cursor-grab touch-none select-none active:cursor-grabbing',
+					{
+						[`${CONFIG_EXCLUDE_EXPORT_CLASS}`]: true,
+					},
+				)}
 				Icon={
 					<div className="p-1">
 						<MoveIcon size={32} className="text-primary" />
@@ -88,13 +95,20 @@ export const Draggable = ({
 				{...bindMove()}
 			/>
 			<IconButton
-				className="absolute -top-3 -right-3"
+				className={classNames('absolute -top-3 -right-3', {
+					[`${CONFIG_EXCLUDE_EXPORT_CLASS}`]: true,
+				})}
 				Icon={<DeleteIcon size={24} className="text-danger-100" />}
 				label="Remove item"
 				onClick={onRemove}
 			/>
 			<IconButton
-				className="absolute -right-3 -bottom-3 cursor-se-resize"
+				className={classNames(
+					'absolute -right-3 -bottom-3 cursor-se-resize',
+					{
+						[`${CONFIG_EXCLUDE_EXPORT_CLASS}`]: true,
+					},
+				)}
 				Icon={
 					<div className="relative h-6 w-6 rounded-full bg-white p-1 after:absolute after:top-1/2 after:left-1/2 after:h-3 after:w-3 after:-translate-x-1/2 after:-translate-y-1/2 after:rounded-full after:bg-primary after:content-['']" />
 				}

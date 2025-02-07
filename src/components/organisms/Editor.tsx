@@ -12,10 +12,16 @@ import { TextIcon } from '@/components/atoms/icons/TextIcon';
 import Modal from '@/components/atoms/Modal';
 import { ImageInput } from '@/components/molecules/ImageInput';
 import { usePosterContext } from '@/context/usePosterContext';
-import html2canvas from 'html2canvas';
+import html2canvas, { Options } from 'html2canvas';
 import { useState } from 'react';
 
-const EXPORT_CONFIG = { width: 1080, height: 1350, backgroundColor: null };
+const EXPORT_CONFIG: Partial<Options> = {
+	width: 1080,
+	height: 1350,
+	backgroundColor: null,
+	ignoreElements: element =>
+		element.classList.contains('exclude-from-export'),
+};
 
 interface Props {
 	canvasRef: React.RefObject<HTMLDivElement>;
