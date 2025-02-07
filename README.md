@@ -13,6 +13,8 @@ The app allows a user to create their own image.
 - Cancel changes
 - Export the image as .png
 
+**Demo**: [LINK](https://endearing-belekoy-3de414.netlify.app)
+
 
 ## Installation 🛠️
 
